@@ -62,12 +62,13 @@ OPENWISP_CONTROLLER_SOURCE=https://github.com/<username>/openwisp-controller/tar
 **Right now, this is only tentative guide. Errata may exist. Please report errors on the [gitter channel](https://gitter.im/openwisp/dockerize-openwisp).**
 
 - `openwisp-dashboard`: You cannot disable the openwisp-dashboard. It is the heart of OpenWISP and performs core functionalities.
+- `openwisp-controller`: You cannot disable the openwisp-controller. It is required for interacting with your devices.
 - `openwisp-websocket`: Removing this container will cause the system to not able to update real-time location for mobile devices.
 
 If you want to disable a service, you can simply remove the container for that service, however, there are additional steps for some images:
 
-- `openwisp-topology`: Set the `SET_TOPOLOGY_TASKS` variable to `False`.
-- `openwisp-radius` : Set the `SET_RADIUS_TASKS` variable to `False`.
+- `openwisp-topology`: Set the `USE_OPENWISP_TOPOLOGY` variable to `False`.
+- `openwisp-radius` : Set the `USE_OPENWISP_RADIUS` variable to `False`.
 - `openwisp-postgres`: If you are using a seperate database instance,
    - Ensure your database instance is reachable by the following OpenWISP containers: `openvpn`, `freeradius`, `celerybeat`, `celery`, `websocket`, `topology`, `radius`, `controller`, `dashboard`.
    - Ensure your database server supports GeoDjango. (Install PostGIS for PostgreSQL)
@@ -122,7 +123,7 @@ You can run tests either with `geckodriver` (firefox) or `chromedriver` (chromiu
 Most commonly used:
 - `develop`: Bundles all the commands required to build the images and run containers.
 - `runtests`: Run testcases to ensure all the services are working.
-- `publish`: Build, test and publish the latest official images.
+- `publish` <USER=docker-username> <TAG=image-tag>: Build, test and publish images.
 - `clean`: Aggressively purge all the containers, images, volumes & networks related to `docker-openwisp`.
 
 Other options:
